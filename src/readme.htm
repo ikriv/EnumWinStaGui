@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<TITLE>Enum Winsta GUI</TITLE>
+</HEAD>
+<BODY>
+
+<FONT COLOR="blue" SIZE="+3"><CENTER>
+<B><I>Enum Winsta GUI</I></B><BR>
+</CENTER></FONT>
+<CENTER><FONT SIZE="-1">
+Window Stations and Desktops Explorer
+</FONT></CENTER>
+<P>
+Enum Winsta GUI displays list of window stations and desktops on your
+Windows NT computer and allows to change their properties.
+<P>
+
+<H1>1. Features</H1>
+
+With Enum Winsta GUI you can:
+<UL>
+    <LI>Edit security settings of window station/desktop objects.</LI>
+    <LI>Create new window stations and desktops.</LI>
+    <LI>Switch to desktops of default window station <CODE>WinSta0</CODE>.</LI>
+    <LI>Start <CODE>cmd.exe</CODE> on any desktop.</LI>
+    <LI>Take ownership over window station and desktop objects.</LI>
+</UL>
+Right-click on window station or desktop name opens context menu that
+contains list of possible actions. 
+
+<H1>2. Limitations</H1>
+
+<H2>2.1. Windows 95/98 Are Not Supported</H2>
+Enum Winsta GUI will not run on Windows 95/98.<BR>
+There is no point running Enum Winsta GUI on Windows 95/98 anyway,
+because Windows 95/98 do not support window stations and desktops.
+Enum Winsta GUI runs on Windows NT 4.0 SP4 or higher, and on Windows 2000.
+On Windows NT 4.0 new security editors (<CODE>AclUI.DLL</CODE>) is required.
+
+<H2>2.2. Inaccessible Window Stations</H2>
+Enum Winsta GUI displays only those window stations for which your user accountt
+has <CODE>WINSTA_ENUMERATE</CODE> right. Therefore, it is possible that some "invisible"
+window stations exist. Windows NT does not have documented way of displaying all
+window stations regardless of <CODE>WINSTA_ENUMERATE</CODE> right.
+<P>
+Furthermore, if you remove <CODE>WINSTA_ENUMERATE</CODE> right from a 
+windows station, it becomes "invisible" to you and there is no
+way to return it back to view, except for rebooting the computer.
+
+<H2>2.3. Inaccessible Desktops</H2>
+Desktop is accessible only if you have <CODE>WINSTA_ENUMDESKTOPS</CODE> right for
+the parent window station. You can enable or disable this right using security
+editor built into Enum Winsta GUI.
+
+<H2>2.4. Take Ownership</H2>
+In case of window stations and desktops, Windows NT does not provide
+documented means for taking ownership on objects for which you don't
+have any access at all. Therefore, take ownership does not always work.
+
+<H2>2.5. Switch To Desktop</H2>
+Switch to desktop feature works only for desktops of <CODE>WinSta0</CODE>
+window station. This limitation is by design. In Windows NT only desktops
+of <CODE>WinSta0</CODE> can be displayed on the physical screen.
+
+<H2>2.6. Creating Window Stations and Desktops</H2>
+Sometimes when you create window station or desktop, it disappears when
+you exit and restart Enum Winsta GUI application. This behavior is by design.
+In Windows NT object (window station, desktop, event, semaphore, etc.) 
+is automatically removed when last handle to the object is closed. 
+When you create window station or desktop object, Enum Winsta GUI holds 
+open handle to the object until the end of the program. When Enum Winsta GUI
+program exits all its handles are automatically closed. If no other program 
+references window station or desktop object in question, the object will be 
+automatically removed by Windows NT. To prevent this you may run
+<CODE>cmd.exe</CODE> on the desktop in question. For window station you will
+have to create a desktop and run <CODE>cmd.exe</CODE> on that desktop.
+
+<H2>2.7. Access to <CODE>Winlogon</CODE> Desktop</H2>
+It seems that in order to open <CODE>Winlogon</CODE> desktop, one needs
+<CODE>DESKTOP_READOBJECTS</CODE> and <CODE>DESKTOP_WRITEOBJECTS</CODE>
+rights, even if they are not specified in <CODE>AccessMask</CODE> parameter 
+of <CODE>OpenDesktop()</CODE>. This is unique for <CODE>Winlogon</CODE> -
+all other desktops behave properly with <CODE>OpenDesktop</CODE>.
+Since even administrators normally don't have those rights on <CODE>Winlogon</CODE>
+desktop, it can normally be opened only by <CODE>LocalSystem</CODE> account.
+
+<H1>3. Running Enum Winsta GUI Under LocalSystem Account</H1>
+You will have much less restricted access to Enum Winsta GUI if you run it
+under LocalSystem account. To do so, use Keith Brown's <CODE>CmdAsUser</CODE> 
+tool from <A HREF="http://www.develop.com/kbrown/security/samples.htm">
+www.develop.com/kbrown/security/samples.htm</A>, or <CODE>su.exe</CODE>
+from Windows NT Resource Kit.
+
+<H1>4. To Do List</H1>
+<OL>
+<LI>If there are too many window stations and desktops and the tree view
+must be scrolled, tree view jumps to the end of list every time it is refreshed.
+This may be very frustrating. Although, on a typical system it is unlikely that
+there are so many window stations and desktops that they don't fit in the window.
+</LI>
+<LI>Undocumented NT API (<CODE>NtQueryDirectoryObject</CODE>???) allows to list 
+all window stations, even those on which caller does not have 
+<CODE>WINSTA_ENUMERATE</CODE> right. These functions are used by <CODE>WinObj</CODE> 
+utility from 
+<A HREF="http://www.sysinternals.com/ntw2k/freeware/winobj.shtml">www.sysinternals.com</A>.
+</LI>
+<LI>Find a way to take ownership on inaccessible desktops/window stations.
+</LI>
+</OL>
+</BODY>
+</HTML>
+

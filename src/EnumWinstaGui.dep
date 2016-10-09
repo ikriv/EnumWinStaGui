@@ -1,0 +1,22 @@
+# Microsoft Developer Studio Generated Dependency File, included by EnumWinstaGui.mak
+
+.\EnumWinstaGui.cpp : \
+	".\EnumWinstaGui.h"\
+	".\EnumWinstaGuiDlg.h"\
+	".\StdAfx.h"\
+	
+
+.\EnumWinstaGui.rc : \
+	".\res\EnumWinstaGui.ico"\
+	".\res\EnumWinstaGui.rc2"\
+	
+
+.\EnumWinstaGuiDlg.cpp : \
+	".\EnumWinstaGui.h"\
+	".\EnumWinstaGuiDlg.h"\
+	".\StdAfx.h"\
+	
+
+.\StdAfx.cpp : \
+	".\StdAfx.h"\
+	
